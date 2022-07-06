@@ -1,23 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
+
+  let count = 0;
+
+  function handleClick(){
+    count = count + 1;
+    const span = document.querySelector('span');
+    span.innerText = `Total click: ${count}`;
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <span style={{color:'tomato'}}>Total click: 0</span>
+      <button onClick={handleClick} onMouseEnter={handleClick}>Click</button>
     </div>
   );
 }

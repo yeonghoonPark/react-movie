@@ -3,17 +3,19 @@ import { useState } from 'react';
 
 function App() {
 
-  const [minutes, setMinutes] = useState(0);
+  const [amount, setAmount] = useState(0);
   const [flip, setFlip] = useState(false);
 
   const onChange = (event) => {
-    setMinutes(event.target.value);
+    setAmount(event.target.value);
   }
 
-  const reset = ()=> setMinutes(0);
+  const reset = ()=> setAmount(0);
 
-  const onflip = ()=> setFlip((current) => !current);
-
+  const onflip = () => {
+    reset();
+    setFlip((current) => !current);
+  }
   return (
     <div className="App">
       <h1>Super Converter</h1>
@@ -22,9 +24,9 @@ function App() {
         id="minutes"
         type="number"
         placeholder="Minutes"
-        value={minutes}
-        onChange={onChange}
+        value={flip ? amount * 60 : amount}
         disabled={flip}  
+        onChange={onChange}
       />
         
       <label htmlFor="hours">Hours</label>
@@ -32,12 +34,15 @@ function App() {
         id="hours"
         type="number"
         placeholder="Hours"
-        value={minutes / 60}
+        value={flip ? amount : amount / 60}
         disabled={!flip} 
+        onChange={onChange}
       />
 
       <button onClick={reset}>Reset</button>
       <button onClick={onflip}>Flip</button>
+
+      
     </div>
   );
 }

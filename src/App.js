@@ -1,19 +1,43 @@
 import './App.css';
+import { useState } from 'react';
 
 function App() {
 
-  let count = 0;
+  const [minutes, setMinutes] = useState(0);
+  const [flip, setFlip] = useState(false);
 
-  function handleClick(){
-    count = count + 1;
-    const span = document.querySelector('span');
-    span.innerText = `Total click: ${count}`;
+  const onChange = (event) => {
+    setMinutes(event.target.value);
   }
+
+  const reset = ()=> setMinutes(0);
+
+  const onflip = ()=> setFlip((current) => !current);
 
   return (
     <div className="App">
-      <span style={{color:'tomato'}}>Total click: 0</span>
-      <button onClick={handleClick} onMouseEnter={handleClick}>Click</button>
+      <h1>Super Converter</h1>
+      <label htmlFor="minutes">Minutes</label>
+      <input
+        id="minutes"
+        type="number"
+        placeholder="Minutes"
+        value={minutes}
+        onChange={onChange}
+        disabled={flip}  
+      />
+        
+      <label htmlFor="hours">Hours</label>
+      <input
+        id="hours"
+        type="number"
+        placeholder="Hours"
+        value={minutes / 60}
+        disabled={!flip} 
+      />
+
+      <button onClick={reset}>Reset</button>
+      <button onClick={onflip}>Flip</button>
     </div>
   );
 }

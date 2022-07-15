@@ -1,51 +1,43 @@
 import { useState, useEffect } from "react";
 
 /* 
-  state가 변화하면 component는 항상 렌더링된다. 
-  상황에 따라 좋을 수 있다. (component전체를 렌더링 해야하는 경우)
-  하지만 원치 않는 상황(component에서 특정함수를 1번만 호출하고 싶을 경우)
-  에서도 component전체가 렌더링되는 문제점이 있다.
+  component에 useEffect를 사용하여 component가 실행 될 때 딱 1번만 코드를 실행하게
+  설정해 놓았다, 그리고 create가 아닌 destroy 할 때도 함수를 실행 할 수 있다.
+  아래에서 useEffect안에서 return을 이용하여 destroy시에도 함수를 실행한다.
+  이를 "Cleanup function" 이라고 부른다.
+  "Celanup function" 은 자주 사용되지는 않는다.
 */
 
-/* 
-  useEffect는 2개의 argument를 가지는 function이다.
-  1번째 argument = 딱 1번만 실행하고 싶은 코드(ex: API)
-  2번째 argument = []가 온다, 이 []안에 들어가는 state는 
-  state변화가 있을 경우에만 useEffect의 코드를 재실행(리렌더링)한다.
-*/
+function Hello() {
+  const createFn = () => {
+    console.log("Created2");
+    return destroyFn;
+  }
+  const destroyFn = () => {
+    console.log("Destroyed2");
+  }
 
-
-function App() {
-  const [cnt, setCnt] = useState(0);
-  const [keyword, setKeyword] = useState("");
-
-  const onClick = () => setCnt((cnt) => cnt + 1);
-  const onChange = (event) => setKeyword(event.target.value);
-
-  console.log("I run all the time");
-
-  useEffect(()=>{
-    console.log("I run only once.");
+  // 정리 1번, 보통 useEffect안에서 함수를 콜하지 않고 함수를 작성한다.
+  useEffect(() => {
+    console.log("Created1");
+    return () => console.log("Destroyed1");
   }, []);
 
-  useEffect(()=>{
-    if(keyword !== ""){
-      console.log(`I run when 'keyword' changes.`);
-    }
-  }, [keyword]);
+  // 정리 2번, createFn에서 return값으로 destroyFn
+  useEffect(createFn, []);
 
-  useEffect(()=>{
-    console.log("I run when 'cnt' changes.");
-  }, [cnt])
+  return <h1>Hello</h1>;
+}
 
-  useEffect(()=>{
-    console.log("I run when 'cnt' changes. & I run when 'keyword' changes.");
-  }, [cnt, keyword])
-  
+function App() {
+  const [showing, setShowing] = useState(false);
+
+  const invertedBoolean = () => setShowing((prev) => !prev);
+
   return (
     <div>
-      <input value={keyword} onChange={onChange} type="text" placeholder="Search here..." />
-      <button onClick={onClick}>{cnt}</button>
+      {showing ? <Hello /> : null}
+      <button onClick={invertedBoolean}>{showing ? "Hide" : "Show"}</button>
     </div>
   );
 }

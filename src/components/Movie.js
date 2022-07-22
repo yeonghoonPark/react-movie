@@ -1,4 +1,4 @@
-import PropTypos from "prop-types";
+import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
 function Movie({medium_cover_image, title, summary, genres, id}) {
@@ -15,10 +15,11 @@ function Movie({medium_cover_image, title, summary, genres, id}) {
 }
 
 Movie.PropTypos = {
-    medium_cover_image: PropTypos.string.isRequired,
-    title: PropTypos.string.isRequired,
-    summary: PropTypos.string.isRequired,
-    genres: PropTypos.arrayOf(PropTypos.string.isRequired)
+    medium_cover_image: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    summary: PropTypes.string.isRequired,
+    genres: PropTypes.arrayOf(PropTypes.string.isRequired),
+    id: PropTypes.string.isRequired
 };
 
 export default Movie;

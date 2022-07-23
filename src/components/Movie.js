@@ -14,12 +14,14 @@ function Movie({medium_cover_image, title, summary, genres, id}) {
     );
 }
 
-Movie.PropTypos = {
+Movie.propTypes = {
     medium_cover_image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     summary: PropTypes.string.isRequired,
     genres: PropTypes.arrayOf(PropTypes.string.isRequired),
-    id: PropTypes.string.isRequired
+    id: PropTypes.number.isRequired
 };
+
+
 
 export default Movie;

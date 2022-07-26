@@ -18,7 +18,7 @@ function Detail() {
     });
 
     return (
-        <div>
+        <div className="detail">
             {
                 loading ?
                     <h1>Loading...</h1> :
